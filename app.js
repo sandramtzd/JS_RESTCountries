@@ -1,6 +1,6 @@
 const submitButton = document.querySelector('#submit-button');
 const countryForm = document.querySelector('#country-form');
-const countryList = document.querySelector("#countriesList");
+const countriesList = document.querySelector("#countriesList");
 let allCountries;
 
 
@@ -22,7 +22,7 @@ const populateList =() => {
     countryLi.textContent = country.name.common;
 
     countryLi.appendChild(countryParagraph);
-    countryList.appendChild(countryLi);
+    countriesList.appendChild(countryLi);
 })}
 
 
@@ -32,11 +32,29 @@ const handleSubmit = (event) => {
     event.preventDefault();
     const searchedCountry = event.target["input-box"].value
     console.log(searchedCountry);
+    countriesFiltered = allCountries.filter(country => 
+        (country.name.common).toLowerCase().includes(searchedCountry.toLowerCase()));
+    console.log(countriesFiltered);
+    countriesList.innerHTML = "";
 
+    countriesFiltered.forEach((country) => {
+        const countryLi = document.createElement("li");
+        const countryParagraph =document.createElement("p");
+
+        countryParagraph.textContent = country.population;
+        countryLi.textContent = country.name.common;
+
+        countryLi.appendChild(countryParagraph);
+        countriesList.appendChild(countryLi);
+
+
+    })
 
 }
 
-countryForm.addEventListener('submit', handleSubmit)
+
+
+countryForm.addEventListener('submit', handleSubmit);
 
 const setup = async () => {
     allCountries = await fetchCountries();
