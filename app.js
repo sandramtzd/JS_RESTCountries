@@ -1,0 +1,52 @@
+const submitButton = document.querySelector('#submit-button');
+const countryForm = document.querySelector('#country-form');
+const countryList = document.querySelector("#countriesList");
+let allCountries;
+
+
+const fetchCountries = async () =>{
+    const response = await fetch ("https://restcountries.com/v3.1/all");
+    const jsonData = await response.json();
+    console.log(jsonData);
+    return jsonData;
+    
+
+}
+
+const populateList =() => {
+    allCountries.forEach((country) => {
+    const countryLi = document.createElement("li");
+    const countryParagraph =document.createElement("p");
+
+    countryParagraph.textContent = country.population;
+    countryLi.textContent = country.name.common;
+
+    countryLi.appendChild(countryParagraph);
+    countryList.appendChild(countryLi);
+})}
+
+
+
+
+const handleSubmit = (event) => {
+    event.preventDefault();
+    const searchedCountry = event.target["input-box"].value
+    console.log(searchedCountry);
+
+
+}
+
+countryForm.addEventListener('submit', handleSubmit)
+
+const setup = async () => {
+    allCountries = await fetchCountries();
+    populateList();
+}
+
+setup();
+
+
+
+
+
+
